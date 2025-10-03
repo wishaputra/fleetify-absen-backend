@@ -2,47 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\EmployeeRequest;
+use App\Models\Employee;
 
 class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    public function index()  { return Employee::with('department')->paginate(20); }
+    public function store(EmployeeRequest $r) { return Employee::create($r->validated()); }
+    public function show(Employee $employee) { return $employee->load('department'); }
+    public function update(EmployeeRequest $r, Employee $employee) { $employee->update($r->validated()); return $employee->load('department'); }
+    public function destroy(Employee $employee) { $employee->delete(); return response()->noContent(); }
 }

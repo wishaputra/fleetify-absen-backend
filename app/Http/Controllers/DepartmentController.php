@@ -2,47 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\DepartmentRequest;
+use App\Models\Department;
 
 class DepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    public function index()  { return Department::paginate(20); }
+    public function store(DepartmentRequest $r) { return Department::create($r->validated()); }
+    public function show(Department $department) { return $department; }
+    public function update(DepartmentRequest $r, Department $department) { $department->update($r->validated()); return $department; }
+    public function destroy(Department $department) { $department->delete(); return response()->noContent(); }
 }
