@@ -1,11 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\{DepartementController, EmployeeController, AttendanceController};
 
-Route::apiResource('departments', DepartmentController::class);
+Route::apiResource('departments', DepartementController::class);
 Route::apiResource('employees', EmployeeController::class);
 
 Route::post('attendance/check-in', [AttendanceController::class, 'checkIn']);

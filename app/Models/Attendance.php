@@ -4,8 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model {
-    protected $fillable = ['employee_id','work_date','check_in_at','check_out_at','status_in','status_out','late_minutes','early_leave_minutes'];
-    protected $casts = ['work_date'=>'date','check_in_at'=>'datetime','check_out_at'=>'datetime'];
-    public function employee(){ return $this->belongsTo(Employee::class); }
+class Attendance extends Model
+{
+    protected $table = 'attendance';
+
+    protected $fillable = [
+        'employee_id',     // varchar(50) -> employee.employee_id
+        'attendance_id',   // string(100), unique
+        'clock_in',
+        'clock_out',
+    ];
+
+    // relasi berbasis "kode" karyawan (string), bukan PK 'id'
+    public function employeeByCode()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+    }
 }
